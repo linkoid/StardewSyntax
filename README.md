@@ -3,7 +3,7 @@
 ## About
 Stardew Syntax provides syntax highlighting for Stardew Valley's dialogue and events.
 Syntax highlighting is applied to files with either the `.sdvevent` or `.sdvdialogue` extensions.
-Syntax highlighting is also applied to strings in py:`.json`/`.jsonc` files that match Stardew Valley's event syntax.
+Syntax highlighting is also applied to strings in `.json`/`.jsonc` files that match Stardew Valley's event syntax.
 
 ## Formatting
 A formatter is provided to make events more readable, as well as convert them back to the inline format.
