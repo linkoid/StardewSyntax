@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "inline.token.contentpatcher",
+  "patterns": [
+    {
+      "name": "meta.token.contentpatcher",
+      "begin": "{{",
+      "end": "}}",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.token.begin.contentpatcher" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.token.end.contentpatcher" }
+      },
+      "patterns": [
+        { "include": "meta.token.contentpatcher"}
+      ]
+    }
+  ]
+}

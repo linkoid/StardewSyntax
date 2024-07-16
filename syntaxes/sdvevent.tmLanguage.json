@@ -1,0 +1,85 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Stardew Valley Event",
+  "scopeName": "source.sdvevent",
+  "fileTypes": [
+   "sdvevent"
+  ],
+  "patterns": [
+    { "include": "inline.token.contentpatcher" },
+    { "include": "#command_seperator" },
+    { "include": "#comment" },
+    { "include": "#command_name" },
+    { "include": "#constant" },
+    { "include": "#number" },
+    { "include": "#farmer" },
+    { "include": "#string" }
+  ],
+  "repository": {
+    "command_seperator": {
+      "name": "keyword.control",
+      "match": "/",
+      "captures": {
+        "0": { "name": "punctuation.definition.command.seperator.sdvevent" }
+      }
+    },
+    "comment": {
+      "name": "comment.line.double-dash.sdvevent",
+      "begin": "(?<=/\\s*)\\-\\-",
+      "end": "(?=/)",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.comment.begin.sdvevent" }
+      }
+    },
+    "command_name": {
+      "name": "support.function.sdvevent",
+      "match": "(?<=/\\s*)[a-zA-Z]\\w*"
+    },
+    "constant": {
+      "name": "constant.language.sdvevent",
+      "match": "\\b(?:true|false|null)\\b"
+    },
+    "number": {
+      "match": "(?<=\\s|/|\\\\)-?(?:0\\.?|[1-9]\\d*\\.?|\\.\\d+)(?:[eE][+-]\\d+)?",
+      "name": "constant.numeric.sdvevent"
+    },
+    "farmer": {
+      "name": "support.variable.farmer.sdvevent",
+      "match": "farmer\\w*"
+    },
+    "string": {
+      "patterns": [
+        {
+          "name": "string.quoted.sdvevent",
+          "begin": "\\\\(\")",
+          "end": "\\\\(\")",
+          "beginCaptures": {
+            "0": { "name": "constant.character.escape" },
+            "1": { "name": "punctuation.definition.string.begin.sdvevent" }
+          },
+          "endCaptures": {
+            "0": { "name": "constant.character.escape" },
+            "1": { "name": "punctuation.definition.string.end.sdvevent" }
+          },
+          "patterns": [
+            { "include": "source.sdvdialogue" }
+          ]
+        },
+        {
+          "name": "string.quoted.sdvevent",
+          "begin": "\"",
+          "end": "\"",
+          "beginCaptures": {
+            "0": { "name": "punctuation.definition.string.begin.sdvevent" }
+          },
+          "endCaptures": {
+            "0": { "name": "punctuation.definition.string.end.sdvevent" }
+          },
+          "patterns": [
+            { "include": "source.sdvdialogue" }
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "injection.string.sdvevent",
+  "fileTypes": [
+   "json"
+  ],
+  "injectionSelector": "string.quoted.double.json",
+  "patterns": [
+    {
+      "name": "meta.embedded.inline.sdvevent",
+      "begin": "\\w+(?=/\\-?\\d+\\s+\\-?\\d+/(?:\\s*\\w+(?:\\s+\\-?\\d+){3}\\s*)+)",
+      "end": "(?<=[^\\\\])(?=\")",
+      "patterns": [
+        { "include": "#escaped_string" },
+        { "include": "#json_escaped_char" },
+        { "include": "injection.sdvevent"}
+      ]
+    }
+  ],
+  "repository": {
+    "escaped_string": {
+      "name": "string.quoted.sdvevent",
+      "begin": "\\\\(\")",
+      "end": "\\\\(\")",
+      "beginCaptures": {
+        "0": { "name": "constant.character.escape.json" },
+        "1": { "name": "punctuation.definition.string.begin.sdvevent" }
+      },
+      "endCaptures": {
+        "0": { "name": "constant.character.escape.json" },
+        "1": { "name": "punctuation.definition.string.end.sdvevent" }
+      },
+      "patterns": [
+        { "include": "source.sdvdialogue" }
+      ]
+    },
+    "json_escaped_char": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.json",
+          "match": "\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4})"
+        },
+        {
+          "name": "invalid.illegal.unrecognized-string-escape.json",
+          "match": "\\\\."
+        }
+      ]
+    }
+  }
+}

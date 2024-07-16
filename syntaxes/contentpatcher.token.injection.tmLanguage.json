@@ -1,0 +1,9 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "scopeName": "injection.token.contentpatcher",
+    "fileTypes": ["json"],
+    "injectionSelector": "L:string",
+    "patterns": [
+        { "include": "inline.token.contentpatcher" }
+    ]
+}

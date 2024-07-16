@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "injection.comment.multiline-string",
+  "fileTypes": [
+   "json"
+  ],
+  "injectionSelector": "L:meta.structure.dictionary.value.json",
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.js.multiline-string",
+      "begin": "(//)\\s*(__multiline__)",
+      "end": "^\\s*[^\\s\\r\\n/\\*]|(?<=\\*/)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.comment.json" },
+        "2": { "name": "keyword.other" }
+      },
+      "patterns": [
+        {
+          "name": "comment.block.json",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.json" }
+          },
+          "contentName": "string.unquoted.json.multiline-string",
+          "patterns": [
+            { "include": "#json_escaped_char" }
+          ]
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "json_escaped_char": {
+      "patterns": [
+        {
+          "name": "constant.character.escape.json",
+          "match": "\\\\(?:[\"\\\\/bfnrt]|u[0-9a-fA-F]{4})"
+        },
+        {
+          "name": "invalid.illegal.unrecognized-string-escape.json",
+          "match": "\\\\."
+        }
+      ]
+    }
+  }
+}

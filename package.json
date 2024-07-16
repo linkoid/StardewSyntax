@@ -1,0 +1,94 @@
+{
+    "name": "stardew-syntax",
+    "displayName": "Stardew Syntax",
+    "description": "",
+    "author": "linkoid",
+    "publisher": "linkoid",
+    "version": "0.4.0",
+    "icon": "resources/icon.png",
+    "readme": "README.md",
+    "engines": {
+        "vscode": "^1.74.0"
+    },
+    "activationEvents": [],
+    "main": "./extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "stardew-syntax.sdvevent.convert-to-inline",
+                "title": "Stardew Syntax: Convert SDVEvent to Inline Format"
+            }
+        ],
+        "languages": [
+            {
+                "id": "sdvevent",
+                "extensions": [".sdvevent"],
+                "configuration": "./sdvevent.language-configuration.json"
+            },
+            {
+                "id": "sdvdialogue",
+                "extensions": [".sdvdialogue"],
+                "configuration": "./sdvdialogue.language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "sdvevent",
+                "scopeName": "source.sdvevent",
+                "path": "./syntaxes/sdvevent.tmLanguage.json",
+                "embeddedLanguages": {
+                    "string.quoted.sdvevent": "sdvdialogue"
+                }
+            },
+            {
+                "language": "sdvdialogue",
+                "scopeName": "source.sdvdialogue",
+                "path": "./syntaxes/sdvdialogue.tmLanguage.json"
+            },
+            {
+                "scopeName": "injection.string.sdvevent",
+                "injectTo": ["source.json"],
+                "path": "./syntaxes/sdvevent.string.injection.tmLanguage.json",
+                "embeddedLanguages": {
+                    "meta.embedded.inline.sdvevent": "sdvevent",
+                    "string.quoted.sdvevent": "sdvdialogue"
+                }
+            },
+            {
+                "scopeName": "injection.comment.multiline-string",
+                "injectTo": ["source.json"],
+                "path": "./syntaxes/multiline-string.injection.tmLanguage.json"
+            },
+            {
+                "scopeName": "injection.comment.sdvevent",
+                "injectTo": ["source.json"],
+                "path": "./syntaxes/sdvevent.comment.injection.tmLanguage.json",
+                "embeddedLanguages": {
+                    "meta.embedded.block.sdvevent": "sdvevent",
+                    "string.quoted.sdvevent": "sdvdialogue"
+                }
+            },
+            {
+                "scopeName": "injection.sdvevent",
+                "path": "./syntaxes/sdvevent.injection.tmLanguage.json"
+            },
+            {
+                "scopeName": "meta.token.contentpatcher",
+                "path": "./syntaxes/contentpatcher.token.meta.tmLanguage.json"
+            },
+            {
+                "scopeName": "inline.token.contentpatcher",
+                "path": "./syntaxes/contentpatcher.token.inline.tmLanguage.json"
+            },
+            {
+                "scopeName": "injection.token.contentpatcher",
+                "injectTo": ["source.json"],
+                "path": "./syntaxes/contentpatcher.token.injection.tmLanguage.json"
+            }
+        ]
+    },
+    "scripts": {},
+    "devDependencies": {
+        "@types/vscode": "^1.73.0"
+    }
+}

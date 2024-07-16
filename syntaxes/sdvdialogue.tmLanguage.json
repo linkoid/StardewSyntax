@@ -1,0 +1,47 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Stardew Valley Dialogue",
+  "scopeName": "source.sdvdialogue",
+  "patterns": [
+    { "include": "#break" },
+    { "include": "#special_characters" },
+    { "include": "#no_portrait_command" },
+    { "include": "#portrait_command" },
+    { "include": "#command" },
+    { "include": "#addressee_token" },
+    { "include": "#token" }
+  ],
+  "repository": {
+    "break": {
+      "name": "keyword.control.other.sdvdialogue.break",
+      "match": "#\\s*\\$b\\s*#|$b|#"
+    },
+    "special_characters": {
+      "name": "keyword.operator.other.sdvdialogue",
+      "match": "\\{|\\^|¦|\\*"
+    },
+    "no_portrait_command": {
+      "name": "support.function.sdvdialogue.portrait",
+      "match": "(?<=#|\\\")\\s*%|\\$\\d+|\\$h|\\$s|\\$u|\\$l|\\$q"
+    },
+    "portrait_command": {
+      "name": "support.function.sdvdialogue.portrait",
+      "match": "\\$\\d+|\\$h|\\$s|\\$u|\\$l|\\$q"
+    },
+    "command": {
+      "name": "support.function.sdvdialogue",
+      "match": "\\$\\w+|%fork|%revealtaste"
+    },
+    "addressee_token": {
+      "name": "constant.character.format.placeholder.other.sdvdialogue.addressee",
+      "match": "@"
+    },
+    "token": {
+      "name": "variable.other.sdvdialogue",
+      "match": "(\\%)\\w+",
+      "captures": {
+        "1": { "name": "constant.character.format.placeholder.other.sdvdialogue" }
+      }
+    }
+  }
+}

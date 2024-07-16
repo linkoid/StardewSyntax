@@ -1,0 +1,107 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "scopeName": "injection.comment.sdvevent",
+  "fileTypes": [
+   "json"
+  ],
+  "injectionSelector_": "L:meta.structure.dictionary.value.json",
+  "patterns_": [
+    {
+      "name": "comment.line.double-slash.js",
+      "begin": "(//)\\s*(__multiline__)(?:\\s.*)?(__sdvevent__)(?:\\s.*)?$",
+      "end": "[^\\s\\r\\n/\\*]|(?<=\\*/)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.comment.json" },
+        "2": { "name": "keyword.other" },
+        "3": { "name": "keyword.other" }
+      },
+      "patterns": [
+        {
+          "name": "comment.block.json",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.json" }
+          },
+          "contentName": "meta.embedded.block.sdvevent",
+          "patterns": [
+            { "include": "injection.sdvevent" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "comment.line.double-slash.js",
+      "begin": "(//)\\s*(__multiline__)(?:\\s.*)?$",
+      "end": "[^\\s\\r\\n/\\*]|(?<=\\*/)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.comment.json" },
+        "2": { "name": "keyword.other" },
+        "3": { "name": "keyword.other" }
+      },
+      "patterns": [
+        {
+          "name": "comment.block.json",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.json" }
+          },
+          "contentName": "meta.embedded.block.sdvevent",
+          "patterns": [
+            { "include": "injection.sdvevent" }
+          ]
+        }
+      ]
+    }
+  ],
+  "injectionSelector": "L:comment.line.double-slash.js.multiline-string",
+  "patterns": [
+    {
+      "name": "comment.line.double-slash.js.multiline-string.sdvevent",
+      "begin": "(__sdvevent__)",
+      "end": "[^\\s\\r\\n/\\*]|(?<=\\*/)",
+      "beginCaptures": {
+        "1": { "name": "keyword.other" }
+      },
+      "patterns": [
+        {
+          "name": "comment.block.json",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.json" }
+          },
+          "contentName": "meta.embedded.block.sdvevent",
+          "patterns": [
+            { "include": "injection.sdvevent" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "comment.line.double-slash.js",
+      "begin": "(//)\\s*(__multiline__)(?:\\s.*)?$",
+      "end": "[^\\s\\r\\n/\\*]|(?<=\\*/)",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.comment.json" },
+        "2": { "name": "keyword.other" },
+        "3": { "name": "keyword.other" }
+      },
+      "patterns": [
+        {
+          "name": "comment.block.json",
+          "begin": "/\\*",
+          "end": "\\*/",
+          "captures": {
+            "0": { "name": "punctuation.definition.comment.json" }
+          },
+          "contentName": "meta.embedded.block.sdvevent",
+          "patterns": [
+            { "include": "injection.sdvevent" }
+          ]
+        }
+      ]
+    }
+  ]
+}

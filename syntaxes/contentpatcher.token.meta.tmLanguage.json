@@ -1,0 +1,70 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "scopeName": "meta.token.contentpatcher",
+    "patterns": [
+        { "include": "#token" },
+        { "include": "#function" },
+        { "include": "#variable" }
+    ],
+    "repository": {
+      "argument": {
+        "patterns": [
+          { "include": "#token" },
+          { "include": "#unquoted-string" }
+        ]
+      },
+      "token": {
+        "name": "meta.token.contentpatcher",
+        "contentName": "variable.other.contentpatcher",
+        "begin": "{{",
+        "end": "}}",
+        "beginCaptures": {
+          "0": { "name": "punctuation.definition.token.begin.contentpatcher" }
+        },
+        "endCaptures": {
+          "0": { "name": "punctuation.definition.token.end.contentpatcher" }
+        },
+        "patterns": [
+          { "include": "meta.token.contentpatcher"}
+        ]
+      },
+      "function": {
+        "name": "meta.function.contentpatcher",
+        "begin": "(\\w+)(:)",
+        "end": "(?=}}|$\n)",
+        "beginCaptures": {
+          "1": { "name": "support.function.contentpatcher" },
+          "2": { "name": "punctuation.definition.function.contentpatcher" }
+        },
+        "patterns": [
+          {
+            "name": "punctuation.definition.argument-seperator.contentpatcher",
+            "match": ","
+          },
+          { "include": "#argument" },
+          {
+            "name": "meta.function.keyword-argument.contentpatcher",
+            "begin": "(\\|)\\s*(\\w+)\\s*(=)",
+            "end": "(?=\\||}}|$\n)",
+            "beginCaptures": {
+              "1": { "name": "punctuation.definition.keyword-argument-seperator.contentpatcher" },
+              "2": { "name": "variable.parameter.contentpatcher" },
+              "3": { "name": "punctuation.definition.assignment.contentpatcher" }
+            },
+            "contentName": "string.unquoted.contentpatcher",
+            "patterns": [
+              { "include": "#argument" }
+            ]
+          }
+        ]
+      },
+      "variable": {
+        "name": "variable.other.contentpatcher",
+        "match": "\\w+"
+      },
+      "unquoted-string": {
+        "name": "string.unquoted.contentpatcher",
+        "match": "\\b[^<>\"\\|\\?\\*]+\\b"
+      }
+    }
+  }
