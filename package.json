@@ -1,12 +1,13 @@
 {
     "name": "stardew-syntax",
     "displayName": "Stardew Syntax",
-    "description": "",
+    "description": "Provides syntax highlighting for Stardew Valley's dialogue and events.",
     "author": "linkoid",
     "publisher": "linkoid",
     "version": "0.4.0",
     "icon": "resources/icon.png",
     "readme": "README.md",
+    "repository": { "url": "https://github.com/linkoid/stardew-syntax" },
     "engines": {
         "vscode": "^1.74.0"
     },
