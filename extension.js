@@ -9,18 +9,25 @@ const vscode = require('vscode');
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-	let formatDisposable = vscode.languages.registerDocumentFormattingEditProvider(
+	context.subscriptions.push(vscode.languages.registerDocumentFormattingEditProvider(
 		'sdvevent',
 		new SDVEventFormattingEditProvider()
-	);
+	));
 
-	let commandDisposable = vscode.commands.registerCommand(
+	context.subscriptions.push(vscode.commands.registerCommand(
 		'stardew-syntax.sdvevent.convert-to-inline',
 		sdvevent_convertToInline
-	);
+	));
 
-	context.subscriptions.push(formatDisposable);
-	context.subscriptions.push(commandDisposable);
+	context.subscriptions.push(vscode.commands.registerCommand(
+		'stardew-syntax.sdvevent.open-selection',
+		sdvevent_openSelection
+	));
+
+	context.subscriptions.push(vscode.commands.registerCommand(
+		'stardew-syntax.sdvevent.open-line',
+		sdvevent_openLine
+	));
 }
 
 // this method is called when your extension is deactivated
@@ -45,6 +52,87 @@ class SDVEventFormattingEditProvider {
 		}
 		return edits;
 	}
+}
+
+async function sdvevent_openSelection() {
+	let activeTextEditor = vscode.window.activeTextEditor;
+	if (!activeTextEditor) return;
+
+	let document = activeTextEditor.document;
+	if (document.languageId !== 'json' && document.languageId !== 'jsonc' ) return;
+	
+	let lineNumber = activeTextEditor.selection.active.line;
+	let line = activeTextEditor.document.lineAt(lineNumber);
+	
+	let match = line.text.match(String.raw`("|')\w+/-?\d+\s+-?\d+/(?:\s*\w+(?:\s+-?\d+){3}\s*)+/.*(?<![^\\](?:\\{2})*\\)\1`);
+	activeTextEditor.selection.start = new vscode.Position(lineNumber, match.index);
+	activeTextEditor.selection.end = new vscode.Position(lineNumber, match.index + match[0].length);
+
+	let newUri = vscode.Uri.parse("untitled:untitled.sdvevent", true);
+	let newDocument = await vscode.workspace.openTextDocument(newUri);
+	let editor = await vscode.window.showTextDocument(newDocument, vscode.ViewColumn.Beside, false);
+	await editor.insertSnippet(match[0].substring(1,-1));
+	
+	await editor.edit((e) => {
+		let formatter = new SDVEventFormattingEditProvider();
+		let edits = formatter.provideDocumentFormattingEdits(editor.document);
+		for (let edit of edits) {
+			if (edit.newEol !== null)
+				e.setEndOfLine(edit.newEol);
+			e.replace(edit.range, edit.newText);
+		}
+	});
+}
+
+function sdvevent_openSelection() {
+	let activeTextEditor = vscode.window.activeTextEditor;
+	if (!activeTextEditor) return;
+
+	let content = activeTextEditor.document.getText(activeTextEditor.selection)
+	return openAsSdvEvent(content)
+}
+
+function sdvevent_openLine() {
+	let activeTextEditor = vscode.window.activeTextEditor;
+	if (!activeTextEditor) return;
+
+	let document = activeTextEditor.document;
+	if (document.languageId !== 'json'
+		&& document.languageId !== 'jsonc'
+		&& document.languageId !== 'jsonl') return;
+	
+	let lineNumber = activeTextEditor.selection.active.line;
+	let line = activeTextEditor.document.lineAt(lineNumber);
+	
+	let match = line.text.match(String.raw`("|')\w+/-?\d+\s+-?\d+/(?:\s*\w+(?:\s+-?\d+){3}\s*)+/.*(?<![^\\](?:\\{2})*\\)("|')`);
+	activeTextEditor.selection = new vscode.Selection(
+		lineNumber, match.index + 1,
+		lineNumber, match.index + match[0].length - 1
+	);
+
+	return openAsSdvEvent(match[0].substring(1, match[0].length - 1))
+}
+
+/**
+ * @param {string} contents 
+ */
+async function openAsSdvEvent(contents) {
+	let newUri = vscode.Uri.parse('untitled:untitled.sdvevent', true);
+	let newDocument = await vscode.workspace.openTextDocument(newUri);
+	let editor = await vscode.window.showTextDocument(newDocument, vscode.ViewColumn.Beside, false);
+	await editor.edit((e) => {
+		e.insert(newDocument.positionAt(0), contents);
+	});
+	
+	await editor.edit((e) => {
+		let formatter = new SDVEventFormattingEditProvider();
+		let edits = formatter.provideDocumentFormattingEdits(editor.document);
+		for (let edit of edits) {
+			if (edit.newEol != null)
+				e.setEndOfLine(edit.newEol);
+			e.replace(edit.range, edit.newText);
+		}
+	});
 }
 
 function sdvevent_convertToInline() {

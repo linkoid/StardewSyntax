@@ -8,7 +8,7 @@
   "patterns": [
     {
       "name": "meta.embedded.inline.sdvevent",
-      "begin": "\\w+(?=/\\-?\\d+\\s+\\-?\\d+/(?:\\s*\\w+(?:\\s+\\-?\\d+){3}\\s*)+)",
+      "begin": "\\w+(?=/-?\\d+\\s+-?\\d+/(?:\\s*\\w+(?:\\s+-?\\d+){3}\\s*)+)",
       "end": "(?<=[^\\\\])(?=\")",
       "patterns": [
         { "include": "#escaped_string" },
