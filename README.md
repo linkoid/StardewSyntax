@@ -1,11 +1,11 @@
-<h1 align="center"><img src="resources/logo.png" alt="logo"><br>Stardew Syntax</h1>
+<h1 align="center"><img src="./resources/logo.png" alt="logo"><br>Stardew Syntax</h1>
 
 ## About
 Stardew Syntax provides syntax highlighting for Stardew Valley's dialogue and events.
 Syntax highlighting is applied to files with either the `.sdvevent` or `.sdvdialogue` extensions.
 Syntax highlighting is also applied to strings in `.json`/`.jsonc` files that match Stardew Valley's event syntax.
 
-![Preview of the readable formatting](resources/sdvevent-preview.gif)
+![Preview of the readable formatting](./resources/sdvevent-preview.gif)
 
 ## Readable Formatting
 A formatter is provided to make events more readable, as well as convert them back to the inline format.

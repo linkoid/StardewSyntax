@@ -64,7 +64,7 @@
       },
       "unquoted-string": {
         "name": "string.unquoted.contentpatcher",
-        "match": "\\b[^<>\"\\|\\?\\*]+\\b"
+        "match": "\\b[^<>\"\\|\\?\\*\\{\\}]+\\b"
       }
     }
   }
